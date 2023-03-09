@@ -7,18 +7,18 @@ from json import dumps
 
 app = Flask(__name__)
 
-# def log():
-# 	print("yes")
-
+# Подключение к БД
 def connectDB():
 	conn = psycopg2.connect(
-		dbname='d3ao19kgp0292q', 
-		user='apxzyslyxttxja', 
- 		password='cb589ba70270a10c5833cb2dab6e6cd09f5cd1858242715860a05d955b925f8e', 
- 		host='ec2-52-215-225-178.eu-west-1.compute.amazonaws.com')
+		dbname='_', 
+		user='_', 
+ 		password='_', 
+ 		host='_'
+ 		)
 	cursor = conn.cursor()
 	return [conn, cursor]
 
+# Проверка подключения к БД
 @app.route("/api/connect", methods=["POST"])
 async def connect():
 	try:
@@ -33,6 +33,7 @@ async def connect():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Проверка доступности сервера
 @app.route("/api/index", methods=["GET"])
 async def index():
 	data = {
@@ -43,6 +44,7 @@ async def index():
 		"Access-Control-Allow-Origin": "*" 
 	}
 
+# Создание аккаунта
 @app.route("/api/createAccount", methods=["POST"])
 async def createAccount():
 	body = request.json
@@ -72,6 +74,7 @@ async def createAccount():
 		"Access-Control-Allow-Origin": "*" 
 	}
 
+# Получение One-Time Token
 @app.route("/api/getOneTimeToken", methods=["POST"])
 async def getOTT():
 	body = request.json
@@ -96,6 +99,7 @@ async def getOTT():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Логин с помощью OTT
 @app.route("/api/loginWithOneTimeToken", methods=["POST"])
 async def loginWithOTT():
 	body = request.json
@@ -127,6 +131,7 @@ async def loginWithOTT():
 			"Access-Control-Allow-Origin": "*" 
 		}	
 
+# Установка никнейма
 @app.route("/api/setPseudonym", methods=["POST"])
 async def setPseudo():
 	body = request.json
@@ -159,6 +164,7 @@ async def setPseudo():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Создание новой заметки
 @app.route("/api/newNote", methods=["POST"])
 async def newNote():
 	body = request.json
@@ -200,6 +206,7 @@ async def newNote():
 				"Access-Control-Allow-Origin": "*" 
 			}
 
+# Получение списка заметок определенного пользователя
 @app.route("/api/getNotes", methods=["POST"])
 async def getNotes():
 	body = request.json
@@ -240,6 +247,7 @@ async def getNotes():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Обновление определенной заметки
 @app.route("/api/updateNote", methods=["POST"])
 async def updateNote():
 	body = request.json
@@ -279,6 +287,7 @@ async def updateNote():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Удаление определенной заметки
 @app.route("/api/removeNote", methods=["POST"])
 async def removeNote():
 	body = request.json
@@ -317,6 +326,7 @@ async def removeNote():
 			"Access-Control-Allow-Origin": "*" 
 		}
 
+# Выход с аккаунта
 @app.route("/api/logout", methods=["POST"])
 async def logout():
 	body = request.json
@@ -343,6 +353,3 @@ async def logout():
 			"Content-Type": "application/json",
 			"Access-Control-Allow-Origin": "*" 
 		}
-
-if __name__ == "__main__":
-	app.run(host="192.168.0.118", port=5000, debug=True)
